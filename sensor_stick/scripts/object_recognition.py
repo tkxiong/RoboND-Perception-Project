@@ -215,7 +215,7 @@ if __name__ == '__main__':
     get_color_list.color_list = []
 
     # Load Model From disk
-    model = pickle.load(open('model.sav', 'rb'))
+    model = pickle.load(open('/home/kx/catkin_ws/data/model_demo.sav', 'rb'))
     clf = model['classifier']
     encoder = LabelEncoder()
     encoder.classes_ = model['classes']

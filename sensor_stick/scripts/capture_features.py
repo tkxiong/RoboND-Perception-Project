@@ -53,8 +53,7 @@ if __name__ == '__main__':
         spawn_model(model_name)
         
         # capture ten samples for each model
-        ####################################
-        for i in range(17):
+        for i in range(50):
             
             # make five attempts to get a valid point cloud then give up
             sample_was_good = False
@@ -71,7 +70,6 @@ if __name__ == '__main__':
                     sample_was_good = True
 
             # Extract Features
-            ##################
             # Generate Color Histogram for the spawned model
             # Enable using_hsv for better results
             c_hists = compute_color_histograms(sample_cloud, using_hsv=True)

@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import svm
 from sklearn.preprocessing import LabelEncoder, StandardScaler
-from sklearn import cross_validation
+from sklearn import model_selection
 from sklearn import metrics
 
 def plot_confusion_matrix(cm, classes,
@@ -63,16 +63,15 @@ y_train = encoder.fit_transform(y_train)
 
 # Create classifier
 # Options linear, rbf, sigmoid, poly.
-clf = svm.SVC(kernel='linear')
+clf = svm.SVC(kernel='sigmoid')
 
 # Set up 5-fold cross-validation
-kf = cross_validation.KFold(len(X_train),
-                            n_folds=5,
+kf = model_selection.KFold(n_splits=5,
                             shuffle=True,
                             random_state=1)
 
 # Perform cross-validation
-scores = cross_validation.cross_val_score(cv=kf,
+scores = model_selection.cross_val_score(cv=kf,
                                          estimator=clf,
                                          X=X_train, 
                                          y=y_train,
@@ -82,7 +81,7 @@ print('Scores: ' + str(scores))
 print('Accuracy: %0.2f (+/- %0.2f)' % (scores.mean(), 2*scores.std()))
 
 # Gather predictions
-predictions = cross_validation.cross_val_predict(cv=kf,
+predictions = model_selection.cross_val_predict(cv=kf,
                                           estimator=clf,
                                           X=X_train, 
                                           y=y_train

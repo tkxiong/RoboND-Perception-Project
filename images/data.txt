@@ -1,0 +1,24 @@
+Features in Training Set: 150
+Invalid Features in Training set: 0
+/home/kx/.local/lib/python2.7/site-packages/sklearn/svm/base.py:196: FutureWarning: The default value of gamma will change from 'auto' to 'scale' in version 0.22 to account better for unscaled features. Set gamma explicitly to 'auto' or 'scale' to avoid this warning.
+  "avoid this warning.", FutureWarning)
+Scores: [ 0.86666667  0.96666667  0.96666667  0.9         0.86666667]
+Accuracy: 0.91 (+/- 0.09)
+accuracy score: 0.913333333333
+
+Features in Training Set: 250
+Invalid Features in Training set: 0
+/home/kx/.local/lib/python2.7/site-packages/sklearn/svm/base.py:196: FutureWarning: The default value of gamma will change from 'auto' to 'scale' in version 0.22 to account better for unscaled features. Set gamma explicitly to 'auto' or 'scale' to avoid this warning.
+  "avoid this warning.", FutureWarning)
+Scores: [ 0.86  0.8   0.68  0.7   0.84]
+Accuracy: 0.78 (+/- 0.15)
+accuracy score: 0.776
+
+Features in Training Set: 400
+Invalid Features in Training set: 0
+/home/kx/.local/lib/python2.7/site-packages/sklearn/svm/base.py:196: FutureWarning: The default value of gamma will change from 'auto' to 'scale' in version 0.22 to account better for unscaled features. Set gamma explicitly to 'auto' or 'scale' to avoid this warning.
+  "avoid this warning.", FutureWarning)
+Scores: [ 0.675   0.6625  0.775   0.75    0.8   ]
+Accuracy: 0.73 (+/- 0.11)
+accuracy score: 0.7325
+

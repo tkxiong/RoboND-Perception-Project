@@ -7,11 +7,9 @@ from pcl_helper import *
 def pcl_callback(pcl_msg):
     
     # Convert ROS msg to PCL data
-    ################################
     cloud = ros_to_pcl(pcl_msg)
     
     # Voxel Grid Downsampling filter
-    ################################
     # Create a VoxelGrid filter object for our input point cloud
     vox = cloud.make_voxel_grid_filter()
 
@@ -27,7 +25,6 @@ def pcl_callback(pcl_msg):
     cloud_filtered = vox.filter()
         
     # PassThrough filter
-    ################################
     # Create a PassThrough filter object.
     passthrough = cloud_filtered.make_passthrough_filter()
 
@@ -42,7 +39,6 @@ def pcl_callback(pcl_msg):
     cloud_filtered = passthrough.filter()
 
     # RANSAC plane segmentation
-    ################################
     # Create the segmentation object
     seg = cloud_filtered.make_segmenter()
 
@@ -61,12 +57,10 @@ def pcl_callback(pcl_msg):
 
     # Extract inliers
     # pcd for table
-    ################################
     extracted_inliers = cloud_filtered.extract(inliers, negative=False)
 
     # Extract outliers
     # pcd for tabletop objects
-    ################################
     extracted_outliers = cloud_filtered.extract(inliers, negative=True)
 
     # Euclidean Clustering
@@ -74,7 +68,6 @@ def pcl_callback(pcl_msg):
     tree = white_cloud.make_kdtree()
 
     # Create a cluster extraction object
-    ################################
     ec = white_cloud.make_EuclideanClusterExtraction()
     # Set tolerances for distance threshold 
     # as well as minimum and maximum cluster size (in points)
@@ -91,7 +84,6 @@ def pcl_callback(pcl_msg):
     cluster_indices = ec.Extract()
 
     # Create Cluster-Mask Point Cloud to visualize each cluster separately
-    ################################
     # Assign a color corresponding to each segmented object in scene
     cluster_color = get_color_list(len(cluster_indices))
 
@@ -105,37 +97,30 @@ def pcl_callback(pcl_msg):
                                              rgb_to_float(cluster_color[j])])
 
     # Create new cloud containing all clusters, each with unique color
-    ################################
     cluster_cloud = pcl.PointCloud_PointXYZRGB()
     cluster_cloud.from_list(color_cluster_point_list)
 
     # Convert PCL data to ROS messages
-    ################################
     ros_cloud_objects = pcl_to_ros(extracted_outliers)
     ros_cloud_table   = pcl_to_ros(extracted_inliers)
     ros_cluster_cloud = pcl_to_ros(cluster_cloud)
 
     # Publish ROS messages
-    ################################
     pcl_objects_pub.publish(ros_cloud_objects)
     pcl_table_pub.publish(ros_cloud_table)
     pcl_cluster_pub.publish(ros_cluster_cloud)
 
     return
 
-################################
 if __name__ == '__main__':
     
     # ROS node initialization
-    ################################
     rospy.init_node('clustering', anonymous=True)
 
     # Create Subscribers
-    ################################
     pcl_sub = rospy.Subscriber("/sensor_stick/point_cloud", pc2.PointCloud2, pcl_callback, queue_size=1)
 
     # Create Publishers
-    ################################
     pcl_objects_pub = rospy.Publisher("/pcl_objects", PointCloud2, queue_size=1)
     pcl_table_pub   = rospy.Publisher("/pcl_table"  , PointCloud2, queue_size=1)
     pcl_cluster_pub = rospy.Publisher("/pcl_cluster", PointCloud2, queue_size=1)
@@ -144,6 +129,5 @@ if __name__ == '__main__':
     get_color_list.color_list = []
 
     # Spin while node is not shutdown
-    ################################
     while not rospy.is_shutdown():
         rospy.spin()
